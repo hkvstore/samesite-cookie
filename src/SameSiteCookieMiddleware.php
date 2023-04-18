@@ -76,6 +76,6 @@ final class SameSiteCookieMiddleware implements MiddlewareInterface
             $cookieValues[] = sprintf('SameSite=%s;', $this->configuration->sameSite);
         }
 
-        return $response->withHeader('Set-Cookie', implode(' ', $cookieValues));
+        return $response->withAddedHeader('Set-Cookie', implode(' ', $cookieValues));
     }
 }
