@@ -1,5 +1,5 @@
 {
-    "name": "selective/samesite-cookie",
+    "name": "hkvstore/samesite-cookie",
     "type": "library",
     "description": "Secure your site with SameSite cookies",
     "keywords": [
