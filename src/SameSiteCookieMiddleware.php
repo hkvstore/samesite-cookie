@@ -51,6 +51,10 @@ final class SameSiteCookieMiddleware implements MiddlewareInterface
     {
         $response = $handler->handle($request);
 
+        if (!$this->configuration->startSession) {
+            return $response;
+        }
+
         $sessionId = $this->sessionHandler->getId();
         $sessionName = $this->sessionHandler->getName();
         $params = $this->sessionHandler->getCookieParams();
