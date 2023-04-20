@@ -51,5 +51,9 @@ final class SameSiteCookieConfiguration
         if (isset($settings['http_only'])) {
             $this->httpOnly = (bool)$settings['http_only'];
         }
+
+        if (isset($settings['secure'])) {
+            $this->secure = (bool)$settings['secure'];
+        }
     }
 }

@@ -18,13 +18,21 @@ final class SameSiteSessionMiddleware implements MiddlewareInterface
     private $sessionHandler;
 
     /**
+     * @var SameSiteCookieConfiguration
+     */
+    private $configuration;
+
+    /**
      * The constructor.
      *
      * @param SessionHandlerInterface|null $sessionHandler The session handler
      */
-    public function __construct(SessionHandlerInterface $sessionHandler = null)
-    {
+    public function __construct(
+        SessionHandlerInterface $sessionHandler = null,
+        SameSiteCookieConfiguration $configuration = null
+    ) {
         $this->sessionHandler = $sessionHandler ?: new PhpSessionHandler();
+        $this->configuration = $configuration ?: new SameSiteCookieConfiguration();
     }
 
     /**
@@ -37,12 +45,15 @@ final class SameSiteSessionMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if (!$this->sessionHandler->isStarted()) {
+        if ($this->configuration->startSession && !$this->sessionHandler->isStarted()) {
             $this->sessionHandler->start();
         }
 
         $response = $handler->handle($request);
-        $this->sessionHandler->save();
+
+        if ($this->sessionHandler->isStarted()) {
+            $this->sessionHandler->save();
+        }
 
         return $response;
     }
