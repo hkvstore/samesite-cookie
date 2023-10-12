@@ -12,7 +12,7 @@ A PSR-15 middleware to secure your site with SameSite cookies :cookie:
 
 ## Requirements
 
-* PHP 7.2+ or 8.0+
+* PHP 8.0+
 
 ## Installation
 
@@ -24,12 +24,12 @@ composer require selective/samesite-cookie
 
 ![image](https://user-images.githubusercontent.com/781074/64995066-95404c80-d8da-11e9-975f-bdbbf55bd311.png)
 
-Same-site cookies ("First-Party-Only" or "First-Party") allow servers to mitigate 
-the risk of CSRF and information leakage attacks by asserting that a particular 
+Same-site cookies ("First-Party-Only" or "First-Party") allow servers to mitigate
+the risk of CSRF and information leakage attacks by asserting that a particular
 cookie should only be sent with requests initiated from the same registrable domain.
 
-**Warning:** SameSite cookies doesn't work at all for old Browsers and 
-also not for some Mobil Browsers e.g. IE 10, Blackberry, Opera Mini, 
+**Warning:** SameSite cookies doesn't work at all for old Browsers and
+also not for some Mobil Browsers e.g. IE 10, Blackberry, Opera Mini,
 IE Mobile, UC Browser for Android.
 
 Further details can be found here:
