@@ -80,6 +80,21 @@ final class SameSiteCookieMiddleware implements MiddlewareInterface
             $cookieValues[] = sprintf('SameSite=%s;', $this->configuration->sameSite);
         }
 
+        $fixCookies = false;
+        $headers = array_filter(headers_list(), fn ($header) => str_starts_with($header, 'Set-Cookie:'));
+        foreach ($headers as $i => $header) {
+            if (str_starts_with($header, 'Set-Cookie: ' . $sessionName . '=')) {
+                unset($headers[$i]); // Remove PHP session cookie
+                $fixCookies = true;
+            }
+        }
+        if ($fixCookies) {
+            header_remove('Set-Cookie');
+            foreach ($headers as $header) {
+                header($header, false);
+            }
+        }
+
         return $response->withAddedHeader('Set-Cookie', implode(' ', $cookieValues));
     }
 }
